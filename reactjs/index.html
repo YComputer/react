@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reactjs</title>
+    <script src="bower_components/react/react.js"></script>
+    <script src="bower_components/react/react-dom.js"></script>
+    <script src="bower_components/babel/browser.min.js"></script>
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+
+    <script type="text/babel">
+            var TestClickComponent = React.createClass({
+
+                handleClick: function(event){
+                    var tipE = ReactDOM.findDOMNode(this.refs.tip);
+
+                    if(tipE.style.display === 'none'){
+                       tipE.style.display= 'inline'
+                    }else{
+                        tipE.style.display= 'none'
+                    
+                    }
+
+                    event.stopPropagation();
+                    event.preventDefault();
+                },
+                render: function(){
+                return(
+                    <div>
+                        <button onClick={this.handleClick}>显示｜隐藏</button><span ref="tip">测试点击</span>
+                    </div>)
+                }
+            });
+
+            var TestInputComponent = React.createClass({
+                getInitialState: function(){
+                    return {
+                        inputContent: ''
+                    }
+                },
+                render: function(){
+                return(
+                    <div>
+                        <input type="text"/><span>{this.state.inputContent}</span>
+                    </div>)
+                }
+            })
+
+    ReactDOM.render(
+        <div>
+        <TestClickComponent/>
+        <br/><br/>
+        <TestInputComponent/>
+        </div>,
+        document.getElementById('container')
+      );
+        </script>
+</body>
+
+</html>
