@@ -7,6 +7,8 @@
     <script src="bower_components/react/react.js"></script>
     <script src="bower_components/react/react-dom.js"></script>
     <script src="bower_components/babel/browser.min.js"></script>
+    <script src="bower_components/remarkable/dist/remarkable.js"></script>
+    
 </head>
 
 <body>
@@ -50,14 +52,64 @@
                         <input type="text"/><span>{this.state.inputContent}</span>
                     </div>)
                 }
-            })
+            });
+
+    var TodoList = React.createClass({
+        render: function() {
+            var createItem = function(item) {
+                return <li key={item.id}>{item.text}</li>;
+            };
+            return <ul>{this.props.items.map(createItem)}</ul>;
+        }
+    });
+
+    var MarkdownEditor = React.createClass({
+  getInitialState: function() {
+    return {value: 'Type some *markdown* here!'};
+  },
+  handleChange: function() {
+    this.setState({value: this.refs.textarea.value});
+  },
+  rawMarkup: function() {
+    var md = new Remarkable();
+    return { __html: md.render(this.state.value) };
+  },
+  render: function() {
+    return (
+      <div className="MarkdownEditor">
+        <h3>Input</h3>
+        <textarea
+          onChange={this.handleChange}
+          ref="textarea"
+          defaultValue={this.state.value} />
+        <h3>Output</h3>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={this.rawMarkup()}
+        />
+      </div>
+    );
+  }
+});
+
+    var TodoApp = React.createClass({
+
+        render: function(){
+
+        return <div>
+                <h2>TODO</h2>
+                <TodoList items = {[{id:1,text:'example'}]} />
+                <input type = "text"></input>
+                <button>submit</button>
+                </div>
+        }
+    
+    });
+    
+
 
     ReactDOM.render(
-        <div>
-        <TestClickComponent/>
-        <br/><br/>
-        <TestInputComponent/>
-        </div>,
+        <MarkdownEditor/>,
         document.getElementById('container')
       );
         </script>
