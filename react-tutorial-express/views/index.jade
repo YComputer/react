@@ -4,5 +4,10 @@ block content
   //- h1= title
   //- p Welcome to #{title}
   hr
-  #content
+  .container
+    .row
+      #content.col-md-6
+      #teststock.col-md-6
+        h3 测试区域2
   script(type="text/babel", src="/javascripts/commentBox.js")
+  script(type="text/babel", src="/javascripts/testStock.js")
